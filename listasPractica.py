@@ -55,5 +55,11 @@ print(len(nombres))
 print(len(apellidos))
 apellidos.insert(0,1)
 print(apellidos)
-print(nombres.insert(0,"Carloncho"))
+nombres.insert(0,"Carloncho")
+print(nombres)
+nombres.insert(-1,"teresita") #Insrta un valor moviendo el valor de esa posicion a la derecha
+print(nombres)
+nombres.append("Fererico") #Agrega un elemento al final de la lista
+print(nombres)
+
 print("Bueno por fin terminamos el ejerccio carpincho....=)")
