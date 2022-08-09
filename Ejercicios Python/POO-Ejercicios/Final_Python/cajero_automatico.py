@@ -17,11 +17,12 @@ salir.
 El programa debe ser realizado en base al paradigma procedimental, debiendo estar 
 correctamente documentado'''
 #Diccionario con los clientes
-clientes = {"Dario" : [1234,.0], "Maria" : [4325,15000.0] , "Pablo": [6345,9450.23]}
+clientes = {"Dario" : [1234,56864.87], "Maria" : [4325,15000.0] , "Pablo": [6345,9450.23]}
 clave = 0
 usuario = []
 opcion = 0
 
+#Limpia la pantalla
 def limpiar_pantalla():
     print("\n"*50)
 
@@ -59,8 +60,6 @@ def menu2():
  5 - Consultar Saldo
  6 - Salir''')
 
-
-
 #Opcion 1:Ingresa dinero a la cuenta
 def op1(nombre,cant):
     clientes[nombre][1] += cant
@@ -80,6 +79,25 @@ def op3(nombre, nueva_pass):
     clientes[nombre][0] = nueva_pass
     print("Clave modificada!")
 
+#Opcion 4: Solicitar Prestamo
+def op4(nombre):
+    if clientes[nombre][1] == 0:
+        cantidad = 10000
+    elif clientes[nombre][1] > 0 and clientes[nombre][1] < 50000:
+        cantidad = 30000
+    elif clientes[nombre][1] >= 50000 and clientes[nombre][1] <= 100000:
+        cantidad = 75000
+    elif clientes[nombre][1] >100000:
+        cantidad = 100000
+    prestamo = float(input("Ingrese la cantidad que desea solicitar[Max = $"+str(cantidad)+"]: "))
+    while(prestamo < 0 or prestamo > cantidad):
+        print("Ingreso una cantidad no permitida!!")
+        prestamo = float(input("Ingrese la cantidad que desea solicitar[Max = $"+str(cantidad)+"]: "))
+    
+    clientes[nombre][1] +=prestamo
+    print("Prestamo otorgado!")
+    print("Saldo actualizado $ "+str(clientes[nombre][1]))
+    
 #Opcion 5: Consultar Saldo
 def op5(nombre):
     return clientes[nombre][1]       
@@ -99,8 +117,6 @@ def verifica_clave(cl_pass):
             usuario = [x,cl_pass]
             return usuario
             
-
-
 #Programa principal
 def main():
     intentos=0
@@ -127,6 +143,8 @@ def main():
                 limpiar_pantalla()
                 print("Usuario "+usuario[0].upper()+": ")
                 print("Su saldo actual es $",op5(usuario[0]))
+            elif opcion == 4:
+                op4(usuario[0])
 
     except ValueError:
         print("Solo se aceptan numeros!")
