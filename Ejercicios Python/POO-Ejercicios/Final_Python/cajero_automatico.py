@@ -16,6 +16,7 @@ Al finalizar una operaciÃ³n el programa pregunta si desea realizar otra operaciÃ
 salir.
 El programa debe ser realizado en base al paradigma procedimental, debiendo estar 
 correctamente documentado'''
+
 #Diccionario con los clientes
 clientes = {"Dario" : [1234,56864.87], "Maria" : [4325,15000.0] , "Pablo": [6345,139450.23]}
 clave = 0
@@ -87,9 +88,9 @@ def op4(nombre):
         cantidad = 10000
     elif clientes[nombre][1] > 0 and clientes[nombre][1] < 50000:
         cantidad = 30000
-    elif clientes[nombre][1] >= 50000 and clientes[nombre][1] <= 100000:
+    elif clientes[nombre][1] >= 50000 and clientes[nombre][1] < 100000:
         cantidad = 75000
-    elif clientes[nombre][1] >100000:
+    elif clientes[nombre][1] >= 100000:
         cantidad = 100000
     prestamo = float(input("Ingrese la cantidad que desea solicitar[Max = $"+str(cantidad)+"]: "))
     while(prestamo < 0 or prestamo > cantidad):
@@ -157,7 +158,7 @@ def menu1(nombre):
             if opcion ==1:
                 menu1(nombre)
             else:
-                opcion == 6
+                opcion = 6
                 break
 
         elif opcion == 2:
@@ -171,7 +172,7 @@ def menu1(nombre):
             if opcion ==1:
                 menu1(nombre)
             else:
-                opcion == 6
+                opcion =6
                 break
 
         elif opcion == 3:
@@ -184,19 +185,19 @@ def menu1(nombre):
             if opcion ==1:
                 menu1(nombre)
             else:
-                opcion == 6
+                opcion = 6
                 break
 
         elif opcion == 4:
             limpiar_pantalla()
             msje_cajero_banelco()
-            print("Usuario/a "+nombre.upper())
+            print("Usuario/a "+nombre.upper()+": ")
             op4(nombre)
             opcion = menu_salida()
-            if opcion ==1:
+            if opcion == 1:
                 menu1(nombre)
             else:
-                opcion == 6
+                opcion = 6
                 break
 
         elif opcion == 5:
@@ -208,7 +209,7 @@ def menu1(nombre):
             if opcion ==1:
                 menu1(nombre)
             else:
-                opcion == 6
+                opcion = 6
                 break
                 
 
