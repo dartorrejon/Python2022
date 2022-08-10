@@ -17,39 +17,14 @@ salir.
 El programa debe ser realizado en base al paradigma procedimental, debiendo estar 
 correctamente documentado'''
 #Diccionario con los clientes
-clientes = {"Dario" : [1234,56864.87], "Maria" : [4325,15000.0] , "Pablo": [6345,9450.23]}
+clientes = {"Dario" : [1234,56864.87], "Maria" : [4325,15000.0] , "Pablo": [6345,139450.23]}
 clave = 0
-usuario = []
-opcion = 0
+usuario = [] #Lista vacia para guardar nombre y contraseña de usuario
+opcion = 999
 
 #Limpia la pantalla
 def limpiar_pantalla():
     print("\n"*50)
-
-#Mensaje de Bienvenida     
-def bienvenida():
-    print("-"*41)
-    print("| Bienvenido/a al cajero de RED BANELCO |")
-    print("-"*41)
-
-#Menu de bienvenida
-def menu1(nombre,op):
-    global opcion
-    opcion = op
-    limpiar_pantalla()
-    bienvenida()
-    print("Usuario/a "+nombre.upper()+": ")
-    print(''' 1 - Ingresar Dinero
- 2 - Retirar Dinero
- 3 - Cambiar contraseña 
- 4 - Solicitar préstamo
- 5 - Consultar Saldo
- 6 - Salir''')
-    opcion = int(input("Elija una opcion: "))
-    while opcion <1 or opcion >6:
-        print("Opcion incorrecta!")
-        menu2()
-        opcion= int(input("Elija una opcion: "))
 
 #Menu2
 def menu2():
@@ -60,16 +35,43 @@ def menu2():
  5 - Consultar Saldo
  6 - Salir''')
 
+#Menu Salida
+def menu_salida():
+    op =999
+    print("1- Volver al menu")
+    print("0- Salir")
+    op = int(input("Elija una opcion: "))
+    while(op != 0 and op != 1):
+        limpiar_pantalla()
+        print("Opcion Incorrecta!!")
+        print("1- Volver al menu")
+        print("0- Salir")
+        op = int(input("Elija una opcion: "))
+    
+    return op
+    
+#Mensaje de Bienvenida     
+def bienvenida():
+    print("-"*41)
+    print("| Bienvenido/a al cajero de RED BANELCO |")
+    print("-"*41)
+
+#Mensaje Banelco
+def msje_cajero_banelco():
+    print("-"*22)
+    print("| Cajero RED BANELCO |")
+    print("-"*22)
+
 #Opcion 1:Ingresa dinero a la cuenta
-def op1(nombre,cant):
-    clientes[nombre][1] += cant
+def op1(nom,cantidad):
+    clientes[nom][1] += cantidad
 
 #Opcion 2: Retira dinero de la cuenta si fuera posible
 def op2(nombre,cant):
     if clientes[nombre][1]>=cant:
         clientes[nombre][1] -= cant
-        print("Usted acaba de retirar $ "+cant)
-        print("Salto remanente $ "+clientes[nombre][1])
+        print("Usted acaba de retirar $ "+str(round(cant,2)))
+        print("Salto remanente $ "+str(round(clientes[nombre][1],2)))
     else:
         print("Saldo insuficiente!")
 
@@ -94,9 +96,10 @@ def op4(nombre):
         print("Ingreso una cantidad no permitida!!")
         prestamo = float(input("Ingrese la cantidad que desea solicitar[Max = $"+str(cantidad)+"]: "))
     
-    clientes[nombre][1] +=prestamo
     print("Prestamo otorgado!")
-    print("Saldo actualizado $ "+str(clientes[nombre][1]))
+    print("Saldo anterior $"+str(round(clientes[nombre][1],2)))
+    clientes[nombre][1] +=prestamo
+    print("Saldo actualizado $ "+str(round(clientes[nombre][1],2)))
     
 #Opcion 5: Consultar Saldo
 def op5(nombre):
@@ -116,11 +119,104 @@ def verifica_clave(cl_pass):
         if cl_pass == y[0]:
             usuario = [x,cl_pass]
             return usuario
-            
+
+#Menu de bienvenida
+def menu1(nombre):
+    global opcion
+    cant = 0
+    n_pass = 0
+
+    limpiar_pantalla()
+    bienvenida()
+    print("Usuario/a "+nombre.upper()+": ")
+    print(''' 1 - Ingresar Dinero
+ 2 - Retirar Dinero
+ 3 - Cambiar contraseña 
+ 4 - Solicitar préstamo
+ 5 - Consultar Saldo
+ 6 - Salir''')
+    opcion = int(input("Elija una opcion: "))
+    while opcion <1 or opcion >6:
+        limpiar_pantalla()
+        print("Opcion incorrecta!")
+        print("Usuario/a "+nombre.upper()+": ")
+        menu2()
+        opcion= int(input("Elija una opcion: "))
+
+    while opcion != 6:
+        
+        if opcion == 1:
+            limpiar_pantalla()
+            msje_cajero_banelco()
+            print("Usuario/a "+nombre.upper()+": ")
+            print("Saldo $",round(op5(nombre),2))
+            cant = float(input("Ingrese la cantidad a depositar $"))
+            op1(nombre, cant)
+            print("Su saldo actualizado $",round(op5(nombre),2))
+            opcion = menu_salida()
+            if opcion ==1:
+                menu1(nombre)
+            else:
+                opcion == 6
+                break
+
+        elif opcion == 2:
+            limpiar_pantalla()
+            msje_cajero_banelco()
+            print("Usuario/a "+nombre.upper()+":")
+            print("Saldo $"+str(op5(nombre)))
+            cant = float(input("Ingrese la cantidad de dinero que desea retirar $"))
+            op2(nombre,cant)
+            opcion = menu_salida()
+            if opcion ==1:
+                menu1(nombre)
+            else:
+                opcion == 6
+                break
+
+        elif opcion == 3:
+            limpiar_pantalla()
+            msje_cajero_banelco()
+            print("Usuario/a "+nombre.upper())
+            n_pass = int(input("Ingrese su nueva contraseña de 4 digitos: "))
+            op3(nombre,n_pass)
+            opcion = menu_salida()
+            if opcion ==1:
+                menu1(nombre)
+            else:
+                opcion == 6
+                break
+
+        elif opcion == 4:
+            limpiar_pantalla()
+            msje_cajero_banelco()
+            print("Usuario/a "+nombre.upper())
+            op4(nombre)
+            opcion = menu_salida()
+            if opcion ==1:
+                menu1(nombre)
+            else:
+                opcion == 6
+                break
+
+        elif opcion == 5:
+            limpiar_pantalla()
+            msje_cajero_banelco()
+            print("Usuario/a "+nombre.upper()+": ")
+            print("Su saldo actual es $",op5(nombre))
+            opcion = menu_salida()
+            if opcion ==1:
+                menu1(nombre)
+            else:
+                opcion == 6
+                break
+                
+
 #Programa principal
 def main():
     intentos=0
     global clave
+    
     bienvenida()
     try:
         clave = val_entrada(int(input("Ingrese su clave de 4 digitos por favor: ")))
@@ -129,26 +225,29 @@ def main():
             print("Clave inexistente!!",4-intentos,"intentos restantes: ")
             intentos += 1
             if intentos ==5:
+                limpiar_pantalla()
+                print("-"*15)
+                print("| RED BANELCO |")
+                print("-"*15)
                 print("Supero la cantidad de intentos!!")
                 print("Vuelva a intentarlo mas tarde o pongase en contacto con el Banco")
                 print("Fin del Programa...")
                 break
             clave = val_entrada(int(input("Ingrese una nueva clave por favor: ")))
         
-        
         if intentos <=4:
-            usuario = verifica_clave(clave)
-            menu1(usuario[0],opcion)
-            if opcion == 5:
+                usuario = verifica_clave(clave)
+                menu1(usuario[0])
                 limpiar_pantalla()
-                print("Usuario "+usuario[0].upper()+": ")
-                print("Su saldo actual es $",op5(usuario[0]))
-            elif opcion == 4:
-                op4(usuario[0])
-
+                print("-"*15)
+                print("| RED BANELCO |")
+                print("-"*15)
+                print("Que tenga un buen dia "+usuario[0].upper()+" =)")
+                print("Fin del Programa....")
     except ValueError:
         print("Solo se aceptan numeros!")
         print("Fin del Programa....")
+
 main()
 
 
