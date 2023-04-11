@@ -16,9 +16,35 @@ Al finalizar una operación el programa pregunta si desea realizar otra operaci�
 salir.
 El programa debe ser realizado en base al paradigma procedimental, debiendo estar 
 correctamente documentado'''
+from os import strerror
 
+try:#"C:/Users/darto/OneDrive/Documentos/Python2022/Ejercicios Python/POO-Ejercicios/Final_Python/cuentas.txt"
+
+    cuentas = open("./Ejercicios Python/POO-Ejercicios/Final_Python/cuentas.txt","rt")
+    print(cuentas.read())
+except:
+    print("Error")
+
+
+try:
+	character_counter = line_counter = 0
+	for line in open("./Ejercicios Python/POO-Ejercicios/Final_Python/cuentas.txt", 'rt'):
+		line_counter += 1
+		for char in line:
+			print(char, end='')
+			character_counter += 1
+	print("\n\nCaracteres en el archivo: ", character_counter)
+	print("Líneas en el archivo:     ", line_counter)
+except IOError as e:
+	print("Se produjo un error de E/S:", strerror(e.errno))
 #Diccionario con los clientes
-clientes = {"Dario" : [1234,56864.87], "Maria" : [4325,15000.0] , "Pablo": [6345,139450.23]}
+#            Nombre    clave  Saldo
+clientes = {
+            "Dario" : [1234, 56864.87],
+            "Maria" : [4325, 15000.0] , 
+            "Pablo": [6345, 139450.23]
+           }
+
 clave = 0
 usuario = [] #Lista vacia para guardar nombre y contraseña de usuario
 opcion = 999

@@ -1,14 +1,6 @@
-n = 0
+from platform import python_implementation, python_version_tuple
 
-while n != 3:
-    print(n)
-    n += 1
-else:
-    print(n, "else")
+print(python_implementation())
 
-print()
-
-for i in range(0, 3):
-    print(i)
-else:
-    print(i, "else")
+for atr in python_version_tuple():
+    print(atr)

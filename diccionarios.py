@@ -1,9 +1,11 @@
 
 #Inicializamos el diccionario
-agenda = {"Nombre": "Dario", 
+agenda = {
+            "Nombre": "Dario", 
             "Edad":38,
             "Direccion":"Peru 222",
-            "Provincia":"Cordoba"}
+            "Provincia":"Cordoba"
+         }
 
 #Imprimimos el diccionario
 print(agenda)
@@ -24,3 +26,12 @@ for x ,y in agenda.items():
 if "carlos" not in agenda.keys():
     print("si")
 else: print("no")
+
+dictionary = {"gato" : "chat", "perro" : "chien", "caballo" : "cheval"}
+phone_numbers = {'jefe': 5551234567, 'Suzy': 22657854310}
+empty_dictionary = {}
+
+print(dictionary)
+print(phone_numbers)
+print(empty_dictionary)
+
